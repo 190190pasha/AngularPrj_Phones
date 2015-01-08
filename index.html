@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html ng-app="PhoneStorage">
+<head>
+	<meta charset="UTF-8">
+	<title>Angular Prj.</title>
+	<script type="text/javascript" src="js/angular.min.js"></script>
+	<script type="text/javascript" src="js/app.js"></script>
+</head>
+<body>
+	<h3 style="color:blue; opacity: 0.79;">Phones &copy;</h3>
+	<section>
+		<ul ng-controller="PhoneList as phoneList">
+			<li ng-repeat="phone in phoneList.phones">
+				<h2>{{phone.name}}</h2>
+				<table border="1">
+					<tr>
+						<td>SIM:</td><td>{{phone.SIM_n}}</td>
+					</tr>
+					<tr>
+						<td>Battery:</td><td>{{phone.battery}}</td>
+					</tr>
+					<tr>
+						<td>Stars:</td><td>{{phone.stars}}</td>
+					</tr>
+				</table>
+				<p>{{phone.description}}</p>
+				<a href ng-click="phone.reviews.showed = !phone.reviews.showed">Reviews</a>
+				<section ng-show="phone.reviews.showed">
+					<ul>
+						<li ng-repeat="review in phone.reviews.list">
+							<p>{{review.author}} Stars: {{review.stars}}</p>
+							<h2>{{review.message}}</h2>
+						</li>
+					</ul>
+					<section>
+						<h2 style="color:blue;">Add Review:</h2>
+						<form name="reviewForm" ng-controller="ReviewController as review" novalidate>
+							<table>
+								<tr>
+									<td>E-mail:</td>
+									<td><input type="email" ng-model="review.author"/></td>
+								</tr>
+								<tr>
+									<td>Stars:</td>
+									<td>
+										<div style="display:inline-block;">
+											<a href ng-click="review.stars = 1">*</a>
+											<a href ng-click="review.stars = 2">*</a>
+											<a href ng-click="review.stars = 3">*</a>
+											<a href ng-click="review.stars = 4">*</a>
+											<a href ng-click="review.stars = 5">*</a>
+										</div>
+										({{review.stars}})
+									</td>
+								</tr>
+								<tr>
+									<td>Message:</td>
+									<td><textarea ng-model="review.message"></textarea></td>
+								</tr>
+								<tr>
+									<td colspan="2"><input type="submit" ng-click="phoneList.addReviewForPhone(phone.id, review)" value="Submit"></td>
+								</tr>
+							</table>
+						</form>
+					</section>
+				</section>
+			</li>
+		</ul>
+	</section>
+</body>
+</html>
